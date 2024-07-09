@@ -26,19 +26,19 @@ Welcome to the Flask Blog Project, a blogging platform built using Flask, SQLAlc
     pip install -r requirements.txt
 3. **Set up the database:**
 
-Create a PostgreSQL database (or adjust database settings in config.py).
+   Create a PostgreSQL database (or adjust database settings in `config.py`).
 
-Run the following commands to set up the database tables and initial data:
+   Run the following command to set up the database tables and initial data:
 
-    ```bash
-    python create_db.py
-    ```
+   ```bash
+   python create_db.py
+
+
 Run the application:
-
     ```bash
+   python app.py
 
-    python app.py
-    ```
+    
 The application will be accessible at http://localhost:5000.
 
 **Usage**
