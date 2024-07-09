@@ -33,9 +33,9 @@ Welcome to the Flask Blog Project, a blogging platform built using Flask, SQLAlc
    ```bash
    python create_db.py
 
+4. **Run the application:**
 
-Run the application:
-    ```bash
+   ```bash
    python app.py
 
     
