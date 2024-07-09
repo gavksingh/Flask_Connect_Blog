@@ -1,0 +1,81 @@
+{% extends "account/dashboard_admin.html" %}
+
+{% block page %}
+
+<section class="my-3 container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ current_stats.user_active_total }}</h5>
+                    <p class="card-text">Active users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ current_stats.posts_approved }}</h5>
+                    <p class="card-text">Posts online</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ current_stats.likes_total }}</h5>
+                    <p class="card-text">Posts liked</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ current_stats.bookmarks_total }}</h5>
+                    <p class="card-text">Posts bookmarked</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-3 container-fluid">
+    <h2 class="mb-3 text-center">Posts pending approval</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col"># id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Theme</th>
+                    <th scope="col">Date to post</th>
+                    <th scope="col">Submitted</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts_pending_approval %}
+                <tr>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.theme_group.theme }}</td>
+                    <td>{{ post.date_to_post.strftime('%d %b %Y') }}</td>
+                    <td>{{ post.date_submitted.strftime('%d %b %Y') }}</td>
+                    <td>{{ post.author.name }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('dashboard.preview_post', id=post.id) }}" target="_blank" class="btn btn-sm btn-outline-secondary">Preview</a>
+                            <a href="{{ url_for('dashboard.approve_post', id=post.id) }}" class="btn btn-sm btn-outline-success">Approve</a>
+                            <a href="{{ url_for('dashboard.edit_post', id=post.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                            <a href="{{ url_for('dashboard.delete_post', id=post.id) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

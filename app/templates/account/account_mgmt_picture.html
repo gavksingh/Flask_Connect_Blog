@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block title %}
+User's Account - Change Profile Picture
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4">Change Profile Picture</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if profile_picture %}
+                <p>If you would like to change your profile picture, you can upload a new one below!</p>
+                <p style="color:rgb(176, 176, 176)">Current profile picture: {{ profile_picture }}</p>
+            {% else %}
+                <p>You do not have a profile picture yet. You can upload one below!</p>
+            {% endif %}
+            
+            <p>Accepted file types: .png, .jpg, and .jpeg.</p>
+            
+            <form action="" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    {{ form.picture.label(class="form-label") }}
+                    {{ form.picture(class="form-control", oninput="checkFileSize(this)") }}
+                </div>
+                
+                <div id="messageFileSizeDisapproved"></div>
+                
+                <button type="submit" class="btn btn-primary mb-2">Upload Picture</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block title %}
+User's Account - Update Information
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4">Change Information</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="" method="POST">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    {{ form.username.label(class="form-label") }}
+                    {{ form.username(class="form-control") }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control") }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.about.label(class="form-label") }}
+                    {{ form.about(class="form-control", rows="4") }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary mb-2">Update Information</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

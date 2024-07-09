@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <meta name="description" content="Travel blog - Blog Post">
+{% endblock %}
+
+{% block title %}
+    {{ blog_posts['title'] }}
+{% endblock %}
+
+{% block content %}
+    <!-- Content -->
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <p class="ALL-special-font ALL-h1 text-center" style="margin-bottom: -20px;">in {{ blog_posts.theme_group.theme }}</p>
+            </div>
+            <div class="col-lg-8 col-md-10">
+                <h1 class="text-center">{{ blog_posts.title }}</h1>
+            </div>
+            <div class="col-lg-8 col-md-10">
+                <p class="text-center">by {{ blog_posts.author.name }} - {{ blog_posts.date_to_post.strftime('%d %B %Y') }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-12 text-justify">
+                        <p>{{ blog_posts.intro }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <img class="col-12" src="{{ url_for('static', filename='Pictures_Posts/' + blog_posts.picture_h) }}" alt="{{ blog_posts['picture_alt'] }}" style="max-width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-12 text-justify">
+                        {{ blog_posts.body|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-1 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <hr>
+            </div>
+        </div>
+    </section>
+
+    <!-- Show Posts likes and option to bookmark -->
+    <section class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <p class="ALL-no-m-p ALL-grey text-center">
+                            <b>
+                                <span id="likes-count-{{ blog_posts.id }}">{{ post_likes|length }}</span>
+                                users have liked this post
+                            </b>
+                        </p>
+                        {% if logged_in %}
+                        <div class="ALL-svg-parent ALL-no-m-p">
+                            <p class="ALL-no-m-p ALL-grey">Liked this post? give it the thumbs up:</p>
+                            <svg class="ALL-svg ALL-grey {% if user_liked %}All-svg-clicked{% endif %}" id="thumbs-up-{{ blog_posts.id }}" onclick="likeOrBookmark({{ blog_posts.id }}, 'like')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512">
+                                <path d="M22.773,7.721A4.994,4.994,0,0,0,19,6H15.011l.336-2.041A3.037,3.037,0,0,0,9.626,2.122L7.712,6H5a5.006,5.006,0,0,0-5,5v5a5.006,5.006,0,0,0,5,5H18.3a5.024,5.024,0,0,0,4.951-4.3l.705-5A5,5,0,0,0,22.773,7.721ZM2,16V11A3,3,0,0,1,5,8H7V19H5A3,3,0,0,1,2,16Zm19.971-4.581-.706,5A3.012,3.012,0,0,1,18.3,19H9V7.734a1,1,0,0,0,.23-.292l2.189-4.435A1.07,1.07,0,0,1,13.141,2.8a1.024,1.024,0,0,1,.233.84l-.528,3.2A1,1,0,0,0,13.833,8H19a3,3,0,0,1,2.971,3.419Z"/>
+                            </svg>
+                        </div>
+                        <div class="ALL-svg-parent ALL-no-m-p">
+                            <p class="ALL-no-m-p ALL-grey">Bookmark it to read later:</p>
+                            <svg class="ALL-svg ALL-grey {% if user_bookmarked %}All-svg-clicked{% endif %}" id="bookmark-{{ blog_posts.id }}" onclick="likeOrBookmark({{ blog_posts.id }}, 'bookmark')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512">
+                                <path d="M20.137,24a2.8,2.8,0,0,1-1.987-.835L12,17.051,5.85,23.169a2.8,2.8,0,0,1-3.095.609A2.8,2.8,0,0,1,1,21.154V5A5,5,0,0,1,6,0H18a5,5,0,0,1,5,5V21.154a2.8,2.8,0,0,1-1.751,2.624A2.867,2.867,0,0,1,20.137,24ZM6,2A3,3,0,0,0,3,5V21.154a.843.843,0,0,0,1.437.6h0L11.3,14.933a1,1,0,0,1,1.41,0l6.855,6.819a.843.843,0,0,0,1.437-.6V5a3,3,0,0,0-3-3Z"/>
+                            </svg>
+                        </div>
+                        {% else %}
+                        <p class="ALL-no-m-p ALL-grey text-center">Sign in to like or bookmark!</p>
+                        <a href="{{ url_for('account.login') }}" class="btn ALL-green-btn-dark mb-2" style="width: 170px;">Log in to comment</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-1 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <hr>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the author -->
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-3 card-img ALL-picture">
+                        <img src="{{ url_for('static', filename='Pictures_Users/' + blog_posts.author.picture) }}" class="card-img" style="border-radius: 10%;" alt="{{ blog_posts.author.name }}">
+                    </div>
+                    <div class="col-9">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">ABOUT THE AUTHOR</small></p>
+                            <h5 class="card-title">{{ blog_posts.author.name }}</h5>
+                            <p class="card-text">A writer, a creator, a blogger, but most importantly: a traveller! Follow the Travel Blog to keep up with this and many other bloggers, travelling the world to bring you tips, ideas, and inspiration!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <hr style="border-width: 3px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment section: form -->
+    <section class="mb-3 container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-1 card-img ALL-picture">
+                        <img src="{{ url_for('static', filename='Pictures_Users/' + current_user.picture) }}" class="card-img" style="border-radius: 10%;" alt="{{ current_user.name }}">
+                    </div>
+                    <div class="col-11">
+                        <form id="commentForm">
+                            <textarea class="form-control ALL-green ALL-no-m-p" id="commentContent" name="commentContent" placeholder="Write a comment..." rows="1"></textarea>
+                            <input type="hidden" name="postId" id="postId" value="{{ blog_posts.id }}">
+                            <input type="hidden" name="authorId" id="authorId" value="{{ current_user.id }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn ALL-green-btn-dark mt-1 mb-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment section: display -->
+    <section class="mb-3 container-fluid" id="commentSection">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <p class="ALL-no-m-p ALL-grey text-center"><b>Comments</b></p>
+                        <div id="comments">
+                            {% for comment in comments %}
+                            <div class="ALL-no-m-p ALL-comment mb-2">
+                                <p class="ALL-no-m-p ALL-grey"><small><b>{{ comment.author.name }}</b> - {{ comment.date_created.strftime('%d %B %Y') }}</small></p>
+                                <p class="ALL-no-m-p">{{ comment.content }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

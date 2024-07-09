@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block title %}
+User's Account
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4">Manage Account</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card ALL-box-preview-shadow" style="width: 100%;">
+                <div class="row no-gutters">
+                    <div class="col-md-6 card-img ALL-picture">
+                        <img src="{{ url_for('static', filename='Pictures_Users/'+current_user.picture) }}" class="card-img All-acct-prof-pic" alt="User Profile Picture">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ current_user.name }}</h5>
+                            <p class="card-text"><b>{{ current_user.email }}</b></p>
+                            <p class="card-text"><small class="text-muted"> Since {{ current_user.date_created.strftime('%d %B %Y') }}</small></p>
+                            <hr>
+                            <p class="card-text">{{ current_user.about }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+            <a href="/dashboard/manage_account/update_picture/{{ current_user.id }}" class="btn btn-primary btn-block mb-3">Update Profile Picture</a>
+            <a href="/dashboard/manage_account/update/{{ current_user.id }}" class="btn btn-success btn-block mb-3">Update Information</a>
+            <a href="/dashboard/manage_account/delete/{{ current_user.id }}" class="btn btn-danger btn-block mb-3">Delete Account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
